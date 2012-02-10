@@ -48,7 +48,7 @@ The details in this guide have been very heavily inspired by several existing st
 <a name="tabs_or_spaces"/>
 ### Tabs or Spaces?
 
-Use **spaces only**, with **2 spaces** per indentation level. Never mix tabs and spaces.
+Use **tabs only**. Never mix tabs and spaces.
 
 <a name="maximum_line_length"/>
 ### Maximum Line Length
@@ -97,15 +97,15 @@ Avoid extraneous whitespace in the following situations:
 - Immediately inside parentheses, brackets or braces
 
     ```coffeescript
-       ($ 'body') # Yes
-       ( $ 'body' ) # No
+       $('body') # Yes
+       $( 'body' ) # No
     ```
 
 - Immediately before a comma
 
     ```coffeescript
-       console.log x, y # Yes
-       console.log x , y # No
+       console.log(x, y) # Yes
+       console.log(x , y) # No
     ```
 
 Additional recommendations:
@@ -122,7 +122,7 @@ Additional recommendations:
            ```
 
     - augmented assignment: `+=`, `-=`, etc.
-    - comparisons: `==`, `<`, `>`, `<=`, `>=`, `unless`, etc.
+    - comparisons: `==`, `<`, `>`, `<=`, `>=`, `is`, etc.
     - arithmetic operators: `+`, `-`, `*`, `/`, etc.
 
     - _(Do not use more than one space around these operators)_
@@ -233,68 +233,68 @@ bar = -> # Yes
 bar = () -> # No
 ```
 
-In cases where method calls are being chained and the code does not fit on a single line, each call should be placed on a separate line and indented by one level (i.e., two spaces), with a leading `.`.
+In cases where method calls are being chained and the code does not fit on a single line, each call should be placed on a separate line and indented by one level, with a leading `.`.
 
 ```coffeescript
 [1..3]
-  .map((x) -> x * x)
-  .concat([10..12])
-  .filter((x) -> x < 11)
-  .reduce((x, y) -> x + y)
+	.map((x) -> x * x)
+	.concat([10..12])
+	.filter((x) -> x < 11)
+	.reduce((x, y) -> x + y)
 ```
 
-When calling functions, choose to omit or include parentheses in such a way that optimizes for readability. Keeping in mind that "readability" can be subjective, the following examples demonstrate cases where parentheses have been omitted or included in a manner that the community deems to be optimal:
+When calling functions, never omit the parentheses:
 
 ```coffeescript
-baz 12
+baz(12)
 
-brush.ellipse x: 10, y: 20 # Braces can also be omitted or included for readability
+brush.ellipse({x: 10, y: 20}) # Braces can also be omitted or included for readability
 
 foo(4).bar(8)
 
 obj.value(10, 20) / obj.value(20, 10)
 
-print inspect value
+print( inspect(value) )
 
-new Tag(new Value(a, b), new Arg(c))
+new Tag( new Value(a, b), new Arg(c) )
 ```
 
 You will sometimes see parentheses used to group functions (instead of being used to group function parameters). Examples of using this style (hereafter referred to as the "function grouping style"):
 
 ```coffeescript
-($ '#selektor').addClass 'klass'
+($ '#selektor').addClass('klass')
 
-(foo 4).bar 8
+(foo 4).bar(8)
 ```
 
 This is in contrast to:
 
 ```coffeescript
-$('#selektor').addClass 'klass'
+$('#selektor').addClass('klass')
 
-foo(4).bar 8
+foo(4).bar(8)
 ```
 
 In cases where method calls are being chained, some adopters of this style prefer to use function grouping for the initial call only:
 
 ```coffeescript
 ($ '#selektor').addClass('klass').hide() # Initial call only
-(($ '#selektor').addClass 'klass').hide() # All calls
+(($ '#selektor').addClass('klass').hide() # All calls
 ```
 
-The function grouping style is not recommended. However, **if the function grouping style is adopted for a particular project, be consistent with its usage.**
+The function grouping style is *not* recommended. However, **if the function grouping style is adopted for a particular project, be consistent with its usage.**
 
 <a name="strings"/>
 ## Strings
 
-Use string interpolation instead of string concatenation:
+Prefer single quoted strings (`''`) instead of double quoted (`""`) strings, unless features like string interpolation are being used for the given string.
 
 ```coffeescript
-"this is an #{adjective} string" # Yes
+'this is an ' + adjective + ' string' # Yes
+"this is an #{adjective} string" # Ok
 "this is an " + adjective + " string" # No
 ```
 
-Prefer single quoted strings (`''`) instead of double quoted (`""`) strings, unless features like string interpolation are being used for the given string.
 
 <a name="conditionals"/>
 ## Conditionals
@@ -356,7 +356,7 @@ To iterate over the keys and values of objects:
 
 ```coffeescript
 object = one: 1, two: 2
-alert("#{key} = #{value}") for key, value of object
+alert(key + ' = ' + value) for key, value of object
 ```
 
 <a name="#extending_native_objects"/>
@@ -443,12 +443,12 @@ return this # Yes
 return @ # No
 ```
 
-Avoid `return` where not required, unless the explicit return increases clarity.
+Avoid `return` only in short lambda functions. Always use `return` where the last expression is not the intended result.
 
 Use splats (`...`) when working with functions that accept variable numbers of arguments:
 
 ```coffeescript
-console.log args... # Yes
+console.log(args...) # Yes
 
 (a, b, c, rest...) -> # Yes
 ```
