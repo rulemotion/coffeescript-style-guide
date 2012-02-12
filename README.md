@@ -279,7 +279,7 @@ In cases where method calls are being chained, some adopters of this style prefe
 
 ```coffeescript
 ($ '#selektor').addClass('klass').hide() # Initial call only
-(($ '#selektor').addClass('klass').hide() # All calls
+(($ '#selektor').addClass 'klass').hide() # All calls
 ```
 
 The function grouping style is *not* recommended. However, **if the function grouping style is adopted for a particular project, be consistent with its usage.**
